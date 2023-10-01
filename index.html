@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokédex</title>
+    <link rel="stylesheet" type="text/css" href="styless.css">
+</head>
+<body>
+    <h1>Pokédex</h1>
+    <label for="pokemonName">Ingrese el nombre del Pokémon:</label>
+    <input type="text" id="pokemonName">
+    <button onclick="buscarPokemon()">Buscar</button>
+    <div id="pokemonInfo">
+        <h2>Información del Pokémon</h2>
+        <p><strong></strong> <span id="nombrePokemon"></span></p>
+        <p><strong></strong> <span id="alturaPokemon"></span></p>
+        <p><strong></strong> <span id="pesoPokemon"></span></p>
+        <p><strong></strong> <span id="ataquePokemon"></span></p>
+        <p><strong></strong> <span id="defensaPokemon"></span></p>
+        <p><strong></strong> <span id="ataqueEspecialPokemon"></span></p>
+        <p><strong></strong> <span id="defensaEspecialPokemon"></span></p>
+        <p><strong></strong> <span id="velocidadPokemon"></span></p>
+        <p><strong></strong> <span id="baseXPPokemon"></span></p>
+        <p><strong></strong> <span id="idPokemon"></span></p>
+        <p><strong></strong> <span id="alturaPokemon"></span></p>
+        <p><strong></strong> <span id="pesoPokemon"></span></p>
+        <p><strong></strong> <span id="habilidadesPokemon"></span></p>
+        <p><strong></strong> <span id="tipoPokemon"></span></p>
+        <img src="" alt="Imagen del Pokémon" id="imagenPokemon">
+    </div>
+    
+    <script>
+        function buscarPokemon() {
+            const nombrePokemon = document.getElementById('pokemonName').value.toLowerCase();
+            const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemon}/`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('nombrePokemon').textContent = data.name;
+                    document.getElementById('alturaPokemon').textContent = `Altura: ${data.height}`;
+                    document.getElementById('pesoPokemon').textContent = `Peso: ${data.weight}`;
+                    document.getElementById('imagenPokemon').src = data.sprites.front_default;
+                    
+                    
+                    document.getElementById('ataquePokemon').textContent = `Ataque: ${data.stats[1].base_stat}`;
+                    document.getElementById('defensaPokemon').textContent = `Defensa: ${data.stats[2].base_stat}`;
+                    document.getElementById('ataqueEspecialPokemon').textContent = `Ataque Especial: ${data.stats[3].base_stat}`;
+                    document.getElementById('defensaEspecialPokemon').textContent = `Defensa Especial: ${data.stats[4].base_stat}`;
+                    document.getElementById('velocidadPokemon').textContent = `Velocidad: ${data.stats[5].base_stat}`;
+                    document.getElementById('baseXPPokemon').textContent = `Base Experience: ${data.base_experience}`;
+                    document.getElementById('idPokemon').textContent = `ID del Pokémon: ${data.id}`;
+                    document.getElementById('habilidadesPokemon').textContent = `Habilidades: ${data.abilities.map(ability => ability.ability.name).join(', ')}`;
+                    document.getElementById('tipoPokemon').textContent = `Tipo: ${data.types.map(type => type.type.name).join(', ')}`;
+                })
+                .catch(error => {
+                    document.getElementById('nombrePokemon').textContent = 'No se encontró el Pokémon';
+                    document.getElementById('alturaPokemon').textContent = '';
+                    document.getElementById('pesoPokemon').textContent = '';
+                    document.getElementById('imagenPokemon').src = '';
+                    document.getElementById('ataquePokemon').textContent = '';
+                    document.getElementById('defensaPokemon').textContent = '';
+                    document.getElementById('ataqueEspecialPokemon').textContent = '';
+                    document.getElementById('defensaEspecialPokemon').textContent = '';
+                    document.getElementById('velocidadPokemon').textContent = '';
+                    document.getElementById('baseXPPokemon').textContent = '';
+                    document.getElementById('idPokemon').textContent = '';
+                    document.getElementById('habilidadesPokemon').textContent = '';
+                    document.getElementById('tipoPokemon').textContent = '';
+                });
+        }
+    </script>
+</body>
+</html>
+
